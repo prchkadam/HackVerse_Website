@@ -38,7 +38,7 @@ const NAV_LINKS: NavLink[] = [
   { label: "FAQ", href: "#faq" },
 ];
 
-const GITHUB_URL = "https://github.com/echosight";
+const GITHUB_URL = "https://github.com/prchkadam/HackVerse";
 
 export function Navbar() {
   const scrolled = useScrolled();

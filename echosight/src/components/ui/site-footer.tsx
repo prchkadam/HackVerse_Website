@@ -10,7 +10,7 @@ const QUICK_LINKS = [
   { label: "Contact", href: "#contact" },
 ] as const;
 
-const GITHUB_URL = "https://github.com/echosight";
+const GITHUB_URL = "https://github.com/prchkadam/HackVerse";
 
 /**
  * Site footer.
