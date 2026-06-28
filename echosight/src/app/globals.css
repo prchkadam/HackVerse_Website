@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html:not(.dark) {
+    color-scheme: light;
+  }
+
+  * {
+    @apply border-ink-800;
+  }
+
+  /*
+   * Found during audit: the rule above sets a global default border
+   * color (standard Tailwind reset, so bare `border` utilities don't
+   * fall back to the browser's currentColor default) — but it only
+   * had a dark-mode value. Any element using a bare `border` class
+   * without an explicit color override would have silently rendered
+   * a dark-ink border on a light-paper background in light mode.
+   * Same defect category as bugs caught elsewhere in this project,
+   * just hiding in the global reset layer.
+   */
+  html:not(.dark) * {
+    @apply border-paper-200;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-base text-ink-100 antialiased;
+  }
+
+  html:not(.dark) body {
+    @apply bg-paper-50 text-paper-900;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display font-semibold tracking-tight;
+  }
+
+  /*
+   * Every interactive element gets a visible focus ring by default.
+   * This is not optional polish — it's the single most common
+   * accessibility regression on marketing sites, usually introduced
+   * by a CSS reset that does `outline: none` for aesthetics and
+   * never replaces it with anything. Keyboard and screen-reader
+   * users who don't use a mouse rely on this to know where they are
+   * on the page at all.
+   */
+  :focus-visible {
+    @apply outline-none ring-2 ring-signal-500 ring-offset-2 ring-offset-ink-950;
+  }
+
+  html:not(.dark) :focus-visible {
+    @apply ring-offset-paper-50;
+  }
+
+  /*
+   * Respect the OS-level reduced motion setting for CSS-driven
+   * animations and transitions (Tailwind's `animate-*` utilities,
+   * plain CSS transitions). This does NOT cover Framer Motion,
+   * despite an earlier version of this comment claiming it acts as
+   * "defense in depth" that "catches any animation a component
+   * might apply" — verified during audit that Framer Motion drives
+   * its animations independently of CSS animation/transition
+   * properties, so this block has no effect on them. Framer Motion
+   * usage on this site (vision-section.tsx, showcase-phone-screen.tsx,
+   * faq-accordion.tsx) is instead made reduced-motion-safe by each
+   * component explicitly checking useReducedMotion() and adjusting
+   * its own animation props — that's the real safety net for those,
+   * not this CSS block. This block's actual job is narrower than its
+   * old comment claimed: it only catches CSS-driven motion.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /*
+   * Visually-hidden utility for content that should reach screen
+   * readers (e.g. a heading establishing landmark structure) without
+   * being visible. Deliberately not `display: none` or `hidden`,
+   * which would remove it from the accessibility tree entirely —
+   * the opposite of the intent.
+   */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
