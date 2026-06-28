@@ -3,6 +3,7 @@ import { ProblemSection } from "@/components/sections/problem-section";
 import { ShowcaseSection } from "@/components/sections/showcase-section";
 import { FeaturesSection } from "@/components/sections/features-section";
 import { RealLifeSection } from "@/components/sections/real-life-section";
+import { DocumentationSection } from "@/components/sections/documentation-section";
 import { VisionSection } from "@/components/sections/vision-section";
 import { AboutSection } from "@/components/sections/about-section";
 import { FaqSection } from "@/components/sections/faq-section";
@@ -27,8 +28,8 @@ import { FAQ_ITEMS } from "@/lib/faq-data";
  *
  * Background elevation check (no two consecutive raised sections):
  * Hero(base) → Problem(base) → Showcase(raised) → Features(base) →
- * RealLife(raised) → Vision(base) → About(base) → Faq(raised) → Cta(base).
- * No violation.
+ * RealLife(raised) → Documentation(base) → Vision(base) → About(base) →
+ * Faq(raised) → Cta(base). No violation.
  */
 export default function HomePage() {
   const faqJsonLd = {
@@ -70,6 +71,7 @@ export default function HomePage() {
       <ShowcaseSection />
       <FeaturesSection />
       <RealLifeSection />
+      <DocumentationSection />
       <VisionSection />
       <AboutSection />
       <FaqSection />
